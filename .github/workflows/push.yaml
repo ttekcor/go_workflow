@@ -3,21 +3,17 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: golang:1.24
-    defaults:
-      run:
-        working-directory: hello-golang
+    container: golang:1.22
     steps:
       - uses: actions/checkout@v4
 
       - name: Run Unit Tests
-        run: GOOS=linux GOARCH=amd64 go test ./...
         working-directory: hello-golang
+        run: GOOS=linux GOARCH=amd64 go test ./...
 
       - name: Vet
-        run:
-          go vet ./...
-          working-directory: hello-golang
+        working-directory: hello-golang
+        run: go vet ./...
 
   deploy:
     name: Push Docker image to Docker Hub
