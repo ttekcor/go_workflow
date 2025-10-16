@@ -11,13 +11,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Unit Tests
-        run: GOOS=linux GOARCH=amd64 go test ./...
-        working-directory: hello-golang
+        run: |
+          cd hello-golang
+          GOOS=linux GOARCH=amd64 go test ./...
 
       - name: Vet
         run: |
+          cd hello-golang
           go vet ./...
-        working-directory: hello-golang
 
   deploy:
     name: Push Docker image to Docker Hub
